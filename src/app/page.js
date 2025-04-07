@@ -100,7 +100,7 @@ export default function Home() {
     //   </footer>
     // </div>
     <>
-     <h2 className="text-5xl text-purple-400 font-bold">Hello World</h2>
+     <h1>Home Page</h1>
     </>
   );
 }
