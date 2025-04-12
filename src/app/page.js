@@ -1,4 +1,5 @@
 import Image from "next/image";
+import UserLists from "./UsersAxios/UserLists";
 
 export default function Home() {
   return (
@@ -101,6 +102,7 @@ export default function Home() {
     // </div>
     <>
      <h1>Home Page</h1>
+     <UserLists />
     </>
   );
 }
