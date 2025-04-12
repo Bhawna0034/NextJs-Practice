@@ -1,9 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { getUser } from '../lib/axios'
+import { getUser, postUser } from '../lib/axios'
 
 const UserLists = () => {
     const [users, setUsers] = useState([]);
+    const [newUser, setNewUser] = useState({
+        name: "",
+        email: ""
+    });
 
     const fetchUserLists = async() => {
         try{
@@ -19,12 +23,32 @@ const UserLists = () => {
     useEffect(() => {
         fetchUserLists();
     },[]);
-   
+
+    const handleInputChange = (event) => {
+        setNewUser({
+            ...newUser,
+            [event.target.name]: event.target.value
+        });
+    }
+
+    const addNewUser = async() => {
+        try{
+            if(!newUser.name || !newUser.email)
+                return alert("All fields are required");
+            const response = await postUser(newUser);
+            // console.info(response.data)
+            setUsers([...users, response.data]);
+            setNewUser({name: "", email: ""});
+            // fetchUserLists();
+        }catch(error){
+            console.error("Failed to add new user: ", error.message);
+        }
+    }
 
     
-
-  return (
-    <div>
+   
+    return (
+    <div className='p-8'>
       <table className='w-full border-collapse mb-4'>
         <thead>
             <tr className='border bg-gray-100 font-bold'>
@@ -45,6 +69,20 @@ const UserLists = () => {
             }
         </tbody>
       </table>
+      <div>
+        <form className='space-y-3 mb-3'>
+            <div>
+                <label htmlFor='name'></label>
+                <input type='text' name='name' id='name' value={newUser.name} onChange={handleInputChange} className="border p-2 outline-none" placeholder='Enter your name' />
+            </div>
+            <div>
+                <label htmlFor='email'></label>
+                <input type='email' name='email' id='email' value={newUser.email} onChange={handleInputChange} className="border p-2 outline-none" placeholder='Enter your email' />
+            </div>
+        </form>
+      </div>
+      <button onClick={addNewUser} className='bg-black text-white px-4 py-2'>Add User</button>
+      
     </div>
   )
 }

@@ -5,7 +5,11 @@ const api = axios.create({
 });
 
 // Get Method
-
 export const getUser = () => {
     return api.get("/users");
+}
+
+// Post Method
+export const postUser = (user) => {
+    return api.post("/users", user);
 }
