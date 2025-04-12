@@ -18,3 +18,8 @@ export const postUser = (user) => {
 export const deleteUser = (id) => {
     return api.delete(`/users/${id}`);
 }
+
+// Put Method
+export const updateUser = (id, user) => {
+    return api.put(`/users/${id}`, user);
+}

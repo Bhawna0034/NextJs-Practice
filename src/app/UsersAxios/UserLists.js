@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { deleteUser, getUser, postUser } from "../lib/axios";
+import { deleteUser, getUser, postUser, updateUser } from "../lib/axios";
 
 const UserLists = () => {
   const [users, setUsers] = useState([]);
@@ -55,6 +55,17 @@ const UserLists = () => {
     }
   };
 
+  const updateUserById = async(id, user) => {
+     try{
+        const response = await updateUser(id, user);
+        setUsers(users.map((user) => user.id === id? response.data: user));
+        console.log("User updated: ", response.data);
+     }catch(error){
+        console.error("Failed to update user: ", error.message);
+     }
+    
+  }
+
   return (
     <div className="p-8">
       <table className="w-full border-collapse mb-4">
@@ -79,6 +90,15 @@ const UserLists = () => {
                   >
                     Delete User
                   </button>
+                </td>
+                <td>
+                    <button onClick={() => updateUserById(user.id, {
+                        name: prompt("Enter name: "),
+                        email: prompt("Enter email: ")
+
+                     })} className="bg-black text-white px-4 py-2">
+                        Edit User
+                    </button>
                 </td>
               </tr>
             );
