@@ -13,3 +13,8 @@ export const getUser = () => {
 export const postUser = (user) => {
     return api.post("/users", user);
 }
+
+// Delete Method
+export const deleteUser = (id) => {
+    return api.delete(`/users/${id}`);
+}
